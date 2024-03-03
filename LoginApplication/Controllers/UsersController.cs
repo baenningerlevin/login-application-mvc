@@ -14,22 +14,29 @@ namespace LoginApplication.Controllers
 
 		public IActionResult Index()
 		{
-			Login login = Login.GetInstance();
+			Login session = Login.GetSession();
 
-			if (login != null)
+			if (session != null)
 			{
-				return View();
+				if (session.IsAdmin)
+				{
+					return RedirectToAction("Admin");
+				}
+				else
+				{
+					return View();
+				}
 			}
 			return RedirectToAction("Index", "Login");
 		}
 
 		public IActionResult LogOut()
 		{
-			Login login = Login.GetInstance();
-			login.IsLoggedIn = false;
+			Login session = Login.GetSession();
+			session.IsLoggedIn = false;
 			Login.LogOut();
 
-			_db.Update(login);
+			_db.Update(session);
 			_db.SaveChanges();
 			return RedirectToAction("Index", "Login");
 		}
@@ -43,6 +50,8 @@ namespace LoginApplication.Controllers
 		public IActionResult Register(User user, string confirmPassword)
 		{
 			User existingUser = _db.Users.FirstOrDefault(u => u.Username == user.Username);
+
+			// Server-side validation
 			if (existingUser != null)
 			{
 				ModelState.AddModelError("Username", "Username already exists");
@@ -51,6 +60,16 @@ namespace LoginApplication.Controllers
 			if (user.Password != confirmPassword)
 			{
 				ModelState.AddModelError("", "Passwords do not match");
+			}
+
+			if (user.Password.Length < 4)
+			{
+				ModelState.AddModelError("Password", "Password must be at least 4 characters long");
+			}
+
+			if (user.Username.Length < 3)
+			{
+				ModelState.AddModelError("Username", "Username must be at least 3 characters long");
 			}
 
 			if (ModelState.IsValid)
@@ -65,6 +84,27 @@ namespace LoginApplication.Controllers
 			else
 			{
 				return View();
+			}
+		}
+
+		public IActionResult Admin()
+		{
+			Login session = Login.GetSession();
+
+			if (session != null)
+			{
+				if (session.IsAdmin)
+				{
+					return View();
+				}
+				else
+				{
+					return RedirectToAction("Index", "Users");
+				}
+			}
+			else
+			{
+				return RedirectToAction("Index", "Users");
 			}
 		}
 	}

@@ -2,32 +2,32 @@
 {
 	public class Login : User
 	{
-		private static Login? _instance = null;
+		private static Login? _session = null;
 
-		public static Login GetInstance()
+		public static Login GetSession()
 		{
-			return _instance;
+			return _session;
 		}
 
 		public static Login LogIn(User user)
 		{
-			if (_instance == null)
+			if (_session == null)
 			{
-				_instance = new Login();
+				_session = new Login();
 			}
 
-			_instance.Id = user.Id;
-			_instance.Username = user.Username;
-			_instance.Password = user.Password;
-			_instance.IsAdmin = user.IsAdmin;
-			_instance.IsLoggedIn = true;
+			_session.Id = user.Id;
+			_session.Username = user.Username;
+			_session.Password = user.Password;
+			_session.IsAdmin = user.IsAdmin;
+			_session.IsLoggedIn = true;
 
-			return _instance;
+			return _session;
 		}
 
 		public static void LogOut()
 		{
-			_instance = null;
+			_session = null;
 		}
 	}
 }

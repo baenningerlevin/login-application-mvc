@@ -23,6 +23,7 @@ namespace LoginApplication.Controllers
 		{
 			User user = _db.Users.FirstOrDefault(u => u.Username == login.Username);
 
+			// Server-side validation
 			if (user == null)
 			{
 				ModelState.AddModelError("Username", "Invalid Username");
@@ -35,7 +36,7 @@ namespace LoginApplication.Controllers
 			if (ModelState.IsValid)
 			{
 				user.IsLoggedIn = true;
-				Login loggedInUser = Login.LogIn(user);
+				Login session = Login.LogIn(user);
 
 				_db.Update(user);
 				_db.SaveChanges();

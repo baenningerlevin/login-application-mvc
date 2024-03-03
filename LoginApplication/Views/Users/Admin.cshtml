@@ -1,11 +1,13 @@
 ﻿@model LoginApplication.Models.Login
 
 @{
-	ViewData["Title"] = "Logged In";
+	ViewData["Title"] = "Admin";
 	Login session = Login.GetSession();
 }
 
 <h2>Welcome, @session.Username!</h2>
+
+<p>You're an admin.</p>
 
 <p>
 	<a asp-action="LogOut" class="btn btn-outline-secondary mt-5">Log out</a>
