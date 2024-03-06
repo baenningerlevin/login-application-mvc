@@ -1,4 +1,4 @@
-﻿@model LoginApplication.Models.Login
+﻿@model List<User>
 
 @{
 	ViewData["Title"] = "Admin";
@@ -7,8 +7,38 @@
 
 <h2>Welcome, @session.Username!</h2>
 
-<p>You're an admin.</p>
-
 <p>
-	<a asp-action="LogOut" class="btn btn-outline-secondary mt-5">Log out</a>
+	<a asp-action="Register" class="btn btn-primary mt-3">Register new user</a>
 </p>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Username</th>
+			<th>Admin</th>
+			<th>Logged in</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+<tbody>
+		@foreach (User user in Model)
+		{
+			<tr>
+				<td>@user.Username</td>
+				<td>@user.IsAdmin</td>
+				<td>@user.IsLoggedIn</td>
+				<td>
+					@if (session.Username == user.Username)
+					{
+						<span class="disabled">Edit</span> <span>|</span>
+						<span class="disabled">Delete</span>
+					}
+					else
+					{
+						<a asp-action="Edit" asp-route-id="@user.Id">Edit</a> <span>|</span>
+						<a asp-action="Delete" asp-route-id="@user.Id">Delete</a>
+					}
+				</td>
+			</tr>
+		}
+</table>

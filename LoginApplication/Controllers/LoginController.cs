@@ -35,8 +35,8 @@ namespace LoginApplication.Controllers
 
 			if (ModelState.IsValid)
 			{
-				user.IsLoggedIn = true;
 				Login session = Login.LogIn(user);
+				user.IsLoggedIn = true;
 
 				_db.Update(user);
 				_db.SaveChanges();
