@@ -37,6 +37,7 @@ namespace LoginApplication.Controllers
 			{
 				Login session = Login.LogIn(user);
 				user.IsLoggedIn = true;
+				TempData["success"] = "Welcome " + user.Username;
 
 				_db.Update(user);
 				_db.SaveChanges();
@@ -45,6 +46,7 @@ namespace LoginApplication.Controllers
 			}
 			else
 			{
+				TempData["error"] = "Login failed";
 				return View();
 			}
 		}

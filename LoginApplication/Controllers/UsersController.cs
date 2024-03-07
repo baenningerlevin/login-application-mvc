@@ -35,7 +35,8 @@ namespace LoginApplication.Controllers
 		{
 			Login session = Login.GetSession();
 			session.IsLoggedIn = false;
-			Login.LogOut(); 
+			Login.LogOut();
+			TempData["success"] = "Logged out successfully";
 
 			_db.Update(session);
 			_db.SaveChanges();
@@ -65,6 +66,7 @@ namespace LoginApplication.Controllers
 
 			if (user.Password.Length < 4)
 			{
+
 				ModelState.AddModelError("Password", "Password must be at least 4 characters long");
 			}
 
@@ -80,13 +82,13 @@ namespace LoginApplication.Controllers
 
 				_db.Users.Add(user);
 				_db.SaveChanges();
-				TempData["success"] = "User registered successfully";
+				TempData["success"] = "User was registered successfully";
 
 				return RedirectToAction("Index");
 			}
 			else
 			{
-				TempData["error"] = "User registration failed";
+				TempData["error"] = "Registration failed";
 				return View();
 			}
 		}
@@ -152,6 +154,7 @@ namespace LoginApplication.Controllers
 			// Server-side validation
 			if (existingUser != null && existingUser.Id != editRoleVM.Id)
 			{
+
 				ModelState.AddModelError("Username", "Username already exists");
 			}
 
@@ -168,7 +171,7 @@ namespace LoginApplication.Controllers
 
 				_db.Users.Update(user);
 				_db.SaveChanges();
-				TempData["success"] = "User updated successfully";
+				TempData["success"] = "User was updated successfully";
 
 				return RedirectToAction("Index");
 			}
@@ -208,7 +211,7 @@ namespace LoginApplication.Controllers
 
 			_db.Users.Remove(user);
 			_db.SaveChanges();
-			TempData["success"] = "User deleted successfully";
+			TempData["success"] = "User was deleted successfully";
 			return RedirectToAction("Index");
 		}
 	}
