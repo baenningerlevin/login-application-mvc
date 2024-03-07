@@ -5,10 +5,24 @@
 	Login session = Login.GetSession();
 }
 
+<style>
+	.icon {
+		font-size: 1.5em;
+	}
+
+	.green {
+		color: #a7c957;
+	}
+
+	.red {
+		color: #ef233c;
+	}
+</style>
+
 <h2>Welcome, @session.Username!</h2>
 <hr />
 <div class="container">
-	<div class="row">
+	<div class="row align-middle">
 		<div class="col-6 p-0 mt-2">
 			<h4>Dashboard</h4>
 		</div>
@@ -30,10 +44,25 @@
 <tbody>
 		@foreach (User user in Model)
 		{
-			<tr>
+			<tr class="align-middle">
 				<td>@user.Username</td>
-				<td>@user.IsAdmin</td>
-				<td>@user.IsLoggedIn</td>
+				@if(@user.IsAdmin)
+				{
+					<td><i class="bi bi-check2 icon green"></i></td>
+				}
+				else
+				{
+					<td><i class="bi bi-x icon red"></i></td>
+				}
+
+				@if(@user.IsLoggedIn)
+				{
+					<td><i class="bi bi-check2 icon green"></i></td>
+				}
+				else
+				{
+					<td><i class="bi bi-x icon red"></i></td>
+				}
 				<td>
 					@if (session.Username == user.Username)
 					{
