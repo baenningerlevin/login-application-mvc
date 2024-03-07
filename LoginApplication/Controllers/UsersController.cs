@@ -80,10 +80,13 @@ namespace LoginApplication.Controllers
 
 				_db.Users.Add(user);
 				_db.SaveChanges();
+				TempData["success"] = "User registered successfully";
+
 				return RedirectToAction("Index");
 			}
 			else
 			{
+				TempData["error"] = "User registration failed";
 				return View();
 			}
 		}
@@ -163,13 +166,15 @@ namespace LoginApplication.Controllers
 				user.Username = editRoleVM.Username;
 				user.IsAdmin = editRoleVM.IsAdmin;
 
-
 				_db.Users.Update(user);
 				_db.SaveChanges();
+				TempData["success"] = "User updated successfully";
+
 				return RedirectToAction("Index");
 			}
 			else
 			{
+				TempData["error"] = "User update failed";
 				return View();
 			}
 		}
@@ -203,6 +208,7 @@ namespace LoginApplication.Controllers
 
 			_db.Users.Remove(user);
 			_db.SaveChanges();
+			TempData["success"] = "User deleted successfully";
 			return RedirectToAction("Index");
 		}
 	}

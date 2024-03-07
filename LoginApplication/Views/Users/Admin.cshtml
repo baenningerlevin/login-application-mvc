@@ -6,10 +6,17 @@
 }
 
 <h2>Welcome, @session.Username!</h2>
-
-<p>
-	<a asp-action="Register" class="btn btn-primary mt-3">Register new user</a>
-</p>
+<hr />
+<div class="container">
+	<div class="row">
+		<div class="col-6 p-0 mt-2">
+			<h4>Dashboard</h4>
+		</div>
+		<div class="col-6">
+			<a asp-action="Register" class="btn btn-outline-dark mt-3 float-end"><i class="bi bi-plus me-2"></i>Register new user</a>
+		</div>
+	</div>
+</div>
 
 <table class="table">
 	<thead>
@@ -17,7 +24,7 @@
 			<th>Username</th>
 			<th>Admin</th>
 			<th>Logged in</th>
-			<th>Actions</th>
+			<th class=""></th>
 		</tr>
 	</thead>
 <tbody>
@@ -30,13 +37,13 @@
 				<td>
 					@if (session.Username == user.Username)
 					{
-						<span class="disabled">Edit</span> <span>|</span>
-						<span class="disabled">Delete</span>
+						<span class="disabled btn btn-dark"><i class="bi bi-pen me-2"></i>Edit</span>
+						<span class="disabled btn btn-danger"><i class="bi bi-trash3 me-2"></i>Delete</span>
 					}
 					else
 					{
-						<a asp-action="Edit" asp-route-id="@user.Id">Edit</a> <span>|</span>
-						<a asp-action="Delete" asp-route-id="@user.Id">Delete</a>
+						<a asp-action="Edit" asp-route-id="@user.Id" class="btn btn-dark"><i class="bi bi-pen me-2"></i>Edit</a>
+						<a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger"><i class="bi bi-trash3 me-2"></i>Delete</a>
 					}
 				</td>
 			</tr>
