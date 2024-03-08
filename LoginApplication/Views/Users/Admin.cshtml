@@ -64,7 +64,7 @@
 					<td><i class="bi bi-x icon red"></i></td>
 				}
 				<td>
-					@if (session.Username == user.Username)
+					@if (user.IsLoggedIn)
 					{
 						<span class="disabled btn btn-dark"><i class="bi bi-pen me-2"></i>Edit</span>
 						<span class="disabled btn btn-danger"><i class="bi bi-trash3 me-2"></i>Delete</span>
